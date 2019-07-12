@@ -57,6 +57,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //loca host thi dong
-        URL::forceScheme('https');
+//        URL::forceScheme('https');
     }
 }
