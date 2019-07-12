@@ -19,7 +19,7 @@
                     <tr>
                         <td data-th="Product">
                             <div class="row">
-                                <div class="col-sm-2 hidden-xs"><img src="image/product/{{$product['item']['image']}}"
+                                <div class="col-sm-2 hidden-xs"><img src="storage/source/image/product/{{$product['item']['image']}}"
                                                                      alt="..."
                                                                      class="img-responsive"/></div>
                                 <div class="col-sm-10">

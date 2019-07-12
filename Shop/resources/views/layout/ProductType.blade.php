@@ -39,7 +39,7 @@
                                             @endif
                                             <div class="single-item-header">
                                                 <a href="{{route('page.getProductDetail',$product->id)}}"><img
-                                                        src="image/product/{{$product->image}}"
+                                                        src="storage/source/image/product/{{$product->image}}"
                                                         alt="" height="250px"></a>
                                             </div>
                                             <div class="single-item-body">
@@ -89,7 +89,7 @@
                                             @endif
                                             <div class="single-item-header">
                                                 <a href="{{route('page.getProductDetail',$product->id)}}"><img
-                                                        src="image/product/{{$product->image}}"
+                                                        src="storage/source/image/product/{{$product->image}}"
                                                         alt="" height="250px"></a>
                                             </div>
                                             <div class="single-item-body">

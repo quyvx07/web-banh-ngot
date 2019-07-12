@@ -4,8 +4,15 @@ namespace App\Providers;
 
 use App\Cart;
 use App\ProductType;
+use App\Repository\Contracts\CategoryRepositoryInterface;
+use App\Repository\Contracts\ProductRepositoryInterface;
+use App\Repository\Eloquent\CategoryEloquentRepository;
+use App\Repository\Eloquent\ProductEloquentRepository;
+use App\Services\Impl\ProductServices;
+use App\Services\Services;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
+use URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -36,6 +43,10 @@ class AppServiceProvider extends ServiceProvider
                     'product_cart' => $cart->items, 'totalPrice' => $cart->totalPrice, 'totalQty' => $cart->totalQty]);
             }
         });
+
+        $this->app->singleton(ProductRepositoryInterface::class, ProductEloquentRepository::class);
+        $this->app->singleton(ProductServices::class, Services::class);
+        $this->app->singleton(CategoryRepositoryInterface::class, CategoryEloquentRepository::class);
     }
 
     /**
@@ -45,6 +56,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        //loca host thi dong
+        URL::forceScheme('https');
     }
 }

@@ -2,17 +2,24 @@
 @section('content')
     <div class="container">
         <div id="content">
-
-            <form action="#" method="post" class="beta-form-checkout">
+            <form action="{{route('page.postCheckOut')}}" method="post" class="beta-form-checkout">
+                @csrf
+                @if(Session::has('thongbao'))
+                    <div class="alert alert-success">{{Session::get('thongbao')}}</div>
+                @endif
                 <div class="row">
                     <div class="col-sm-6">
                         <h4>Đặt hàng</h4>
                         <div class="space20">&nbsp;</div>
-
                         <div class="form-block">
                             <label for="name">Họ tên*</label>
-                            <input type="text" id="name" placeholder="Họ tên" required>
+                            <input type="text" id="name" name="name" placeholder="Họ tên" required>
                         </div>
+                        @if($errors->has('name'))
+                        <div class="alert alert-danger">
+                                {{$errors->first('name')}}
+                        </div>
+                        @endif
                         <div class="form-block">
                             <label>Giới tính </label>
                             <input id="gender" type="radio" class="input-radio" name="gender" value="nam"
@@ -24,24 +31,44 @@
 
                         <div class="form-block">
                             <label for="email">Email*</label>
-                            <input type="email" id="email" required placeholder="expample@gmail.com">
+                            <input type="email" id="email" name="email" required placeholder="expample@gmail.com">
                         </div>
+                        @if($errors->has('email'))
+                        <div class="alert alert-danger">
+                                {{$errors->first('email')}}
+                        </div>
+                        @endif
 
                         <div class="form-block">
-                            <label for="adress">Địa chỉ*</label>
-                            <input type="text" id="adress" placeholder="Street Address" required>
+                            <label for="address">Địa chỉ*</label>
+                            <input type="text" id="address" name="address" placeholder="Street Address" required>
                         </div>
+                        @if($errors->has('address'))
+                            <div class="alert alert-danger">
+                                {{$errors->first('address')}}
+                            </div>
+                        @endif
 
 
                         <div class="form-block">
                             <label for="phone">Điện thoại*</label>
-                            <input type="text" id="phone" required>
+                            <input type="text" id="phone" name="phone" required>
                         </div>
+                        @if($errors->has('phone'))
+                        <div class="alert alert-danger">
+                                {{$errors->first('phone')}}
+                        </div>
+                        @endif
 
                         <div class="form-block">
                             <label for="notes">Ghi chú</label>
-                            <textarea id="notes"></textarea>
+                            <textarea id="notes" name="note"></textarea>
                         </div>
+                        @if($errors->has('note'))
+                        <div class="alert alert-danger">
+                                {{$errors->first('note')}}
+                        </div>
+                        @endif
                     </div>
                     <div class="col-sm-6">
                         <div class="your-order">
@@ -49,24 +76,36 @@
                             <div class="your-order-body" style="padding: 0px 10px">
                                 <div class="your-order-item">
                                     <div>
-                                        <!--  one item	 -->
-                                        <div class="media">
-                                            <img width="25%" src="assets/dest/images/shoping1.jpg" alt=""
-                                                 class="pull-left">
-                                            <div class="media-body">
-                                                <p class="font-large">Men's Belt</p>
-                                                <span class="color-gray your-order-info">Color: Red</span>
-                                                <span class="color-gray your-order-info">Size: M</span>
-                                                <span class="color-gray your-order-info">Qty: 1</span>
-                                            </div>
-                                        </div>
-                                        <!-- end one item -->
+                                    @if(Session::has('cart'))
+                                        @foreach($cart->items as $product)
+                                            <!--  one item	 -->
+                                                <div class="media">
+                                                    <img width="25%"
+                                                         src="storage/source/image/product/{{$product['item']['image']}}"
+                                                         alt=""
+                                                         class="pull-left">
+                                                    <div class="media-body">
+                                                        <p class="font-large">{{$product['item']['name']}}</p>
+                                                        <span
+                                                            class="color-gray your-order-info">Số Lượng: {{$product['qty']}}</span>
+                                                        <span
+                                                            class="color-gray your-order-info">Tổng tiền: {{number_format($product['price'])}} đồng</span>
+                                                    </div>
+                                                </div>
+                                                <!-- end one item -->
                                     </div>
+                                    @endforeach
+                                    @else
+                                        {{'Không có sản phẩm nào'}}
+                                    @endif
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="your-order-item">
                                     <div class="pull-left"><p class="your-order-f18">Tổng tiền:</p></div>
-                                    <div class="pull-right"><h5 class="color-black">$235.00</h5></div>
+                                    <div class="pull-right"><h5
+                                            class="color-black">@if(Session::has('cart')){{number_format(Session::get('cart')->totalPrice)." Đồng"}}
+                                            @else {{'0'}}
+                                            @endif</h5></div>
                                     <div class="clearfix"></div>
                                 </div>
                             </div>
@@ -100,8 +139,11 @@
                                 </ul>
                             </div>
 
-                            <div class="text-center"><a class="beta-btn primary" href="#">Đặt hàng <i
-                                        class="fa fa-chevron-right"></i></a></div>
+                            <div class="text-center">
+                                <button class="beta-btn primary" href="{{route('page.postCheckOut')}}" type="submit">Đặt
+                                    hàng <i
+                                        class="fa fa-chevron-right"></i></button>
+                            </div>
                         </div> <!-- .your-order -->
                     </div>
                 </div>

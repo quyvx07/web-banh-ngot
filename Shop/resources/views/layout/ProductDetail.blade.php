@@ -7,7 +7,7 @@
 
                     <div class="row">
                         <div class="col-sm-4">
-                            <img src="/image/product/{{$product->image}}" alt="">
+                            <img src="storage/source//image/product/{{$product->image}}" alt="">
                         </div>
                         <div class="col-sm-8">
                             <div class="single-item-body">
@@ -68,7 +68,7 @@
 
                                         <div class="single-item-header">
                                             <a href="{{route('page.getProductDetail',$product->id)}}"><img
-                                                    src="image/product/{{$product->image}}"
+                                                    src="storage/source/image/product/{{$product->image}}"
                                                     height="250px" alt=""></a>
                                         </div>
                                         <div class="single-item-body">
@@ -99,86 +99,6 @@
                         </div>
                     </div> <!-- .beta-products-list -->
                     <div class="row">{{$products->links()}}</div>
-                </div>
-                <div class="col-sm-3 aside">
-                    <div class="widget">
-                        <h3 class="widget-title">Best Sellers</h3>
-                        <div class="widget-body">
-                            <div class="beta-sales beta-lists">
-                                <div class="media beta-sales-item">
-                                    <a class="pull-left" href="product.html"><img
-                                            src="assets/dest/images/products/sales/1.png" alt=""></a>
-                                    <div class="media-body">
-                                        Sample Woman Top
-                                        <span class="beta-sales-price">$34.55</span>
-                                    </div>
-                                </div>
-                                <div class="media beta-sales-item">
-                                    <a class="pull-left" href="product.html"><img
-                                            src="assets/dest/images/products/sales/2.png" alt=""></a>
-                                    <div class="media-body">
-                                        Sample Woman Top
-                                        <span class="beta-sales-price">$34.55</span>
-                                    </div>
-                                </div>
-                                <div class="media beta-sales-item">
-                                    <a class="pull-left" href="product.html"><img
-                                            src="assets/dest/images/products/sales/3.png" alt=""></a>
-                                    <div class="media-body">
-                                        Sample Woman Top
-                                        <span class="beta-sales-price">$34.55</span>
-                                    </div>
-                                </div>
-                                <div class="media beta-sales-item">
-                                    <a class="pull-left" href="product.html"><img
-                                            src="assets/dest/images/products/sales/4.png" alt=""></a>
-                                    <div class="media-body">
-                                        Sample Woman Top
-                                        <span class="beta-sales-price">$34.55</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> <!-- best sellers widget -->
-                    <div class="widget">
-                        <h3 class="widget-title">New Products</h3>
-                        <div class="widget-body">
-                            <div class="beta-sales beta-lists">
-                                <div class="media beta-sales-item">
-                                    <a class="pull-left" href="product.html"><img
-                                            src="assets/dest/images/products/sales/1.png" alt=""></a>
-                                    <div class="media-body">
-                                        Sample Woman Top
-                                        <span class="beta-sales-price">$34.55</span>
-                                    </div>
-                                </div>
-                                <div class="media beta-sales-item">
-                                    <a class="pull-left" href="product.html"><img
-                                            src="assets/dest/images/products/sales/2.png" alt=""></a>
-                                    <div class="media-body">
-                                        Sample Woman Top
-                                        <span class="beta-sales-price">$34.55</span>
-                                    </div>
-                                </div>
-                                <div class="media beta-sales-item">
-                                    <a class="pull-left" href="product.html"><img
-                                            src="assets/dest/images/products/sales/3.png" alt=""></a>
-                                    <div class="media-body">
-                                        Sample Woman Top
-                                        <span class="beta-sales-price">$34.55</span>
-                                    </div>
-                                </div>
-                                <div class="media beta-sales-item">
-                                    <a class="pull-left" href="product.html"><img
-                                            src="assets/dest/images/products/sales/4.png" alt=""></a>
-                                    <div class="media-body">
-                                        Sample Woman Top
-                                        <span class="beta-sales-price">$34.55</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> <!-- best sellers widget -->
                 </div>
             </div>
         </div> <!-- #content -->

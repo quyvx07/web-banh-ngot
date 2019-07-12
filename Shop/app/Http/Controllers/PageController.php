@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Bill;
+use App\BillDetail;
 use App\Cart;
+use App\Customer;
+use App\Http\Requests\postCheckOut;
 use App\Product;
 use App\ProductType;
 use App\Slide;
@@ -16,10 +20,13 @@ class PageController extends Controller
     {
         $slide = Slide::all();
         $new_product = Product::where('new', 1)->paginate(4);
+        $total_new_product = Product::where('new', 1)->get();
         $sale_product = Product::where('promotion_price', '<>', 0)->paginate(8);
+        $total_sale_product = Product::where('promotion_price', '<>', 0)->get();
         $cart = Session::get('cart');
         $product_type = ProductType::all();
-        return view('layout.index', compact('slide', 'new_product', 'sale_product', 'cart', 'product_type'));
+        return view('layout.index', compact('slide', 'new_product',
+            'sale_product', 'cart', 'product_type', 'total_new_product', 'total_sale_product'));
     }
 
     public function getProductType($type)
@@ -69,9 +76,53 @@ class PageController extends Controller
         return view('layout.shopping_cart', compact('cart'));
     }
 
-    public function checkOut()
+    public function getCheckOut()
     {
-        return view('layout.checkout');
+        $cart = Session::get('cart');
+        return view('layout.checkout', compact('cart'));
+    }
+
+    public function postCheckOut(postCheckOut $request)
+    {
+        if (Session::has('cart')) {
+            $cart = Session::get('cart');
+
+            $customer = new Customer();
+            $customer->name = $request->name;
+            $customer->gender = $request->gender;
+            $customer->email = $request->email;
+            $customer->address = $request->address;
+            $customer->phone_number = $request->phone;
+            $customer->note = $request->note;
+            $customer->save();
+
+            $bill = new  Bill();
+            $bill->id_customer = $customer->id;
+            $bill->date_order = date('Y-m-d');
+            $bill->total = $cart->totalPrice;
+            $bill->payment = $request->payment;
+            $bill->note = $request->note;
+            $bill->save();
+
+            foreach ($cart->items as $key => $value) {
+                $bill_detail = new BillDetail();
+                $bill_detail->id_bill = $bill->id;
+                $bill_detail->id_product = $key;
+                $bill_detail->quantity = $value['qty'];
+                $bill_detail->unit_price = ($value['price'] / $value['qty']);
+                $bill_detail->save();
+            }
+            Session::forget('cart');
+        }
+        return redirect()->back()->with('thongbao', 'Đã đặt hàng thành công');
+    }
+
+    public function search(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $total = Product::where('name', 'LIKE', '%' . $keyword . '%')->get();
+        $products = Product::where('name', 'LIKE', '%' . $keyword . '%')->paginate(8);
+        return view('layout.Search', compact('products', 'total'));
     }
 
 

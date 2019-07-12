@@ -9,9 +9,31 @@
             </div>
             <div class="pull-right auto-width-right">
                 <ul class="top-details menu-beta l-inline">
-                    <li><a href="#"><i class="fa fa-user"></i>Tài khoản</a></li>
-                    <li><a href="#">Đăng kí</a></li>
-                    <li><a href="#">Đăng nhập</a></li>
+                    @if (Auth::check())
+                        @if(Auth::id()==4)
+                            <li><a href="{{route('admin.category.index')}}">Quản Lý</a></li>
+                        @endif
+                    @endif
+                    <li><a href="#"><i class="fa fa-user"></i>
+                            @if (Auth::check())
+                                {{Auth::user()->name}}
+                            @else
+                                {{'Tài khoản'}}
+                            @endif
+                        </a></li>
+                    @if (Auth::check())
+                        <li><a class="dropdown-item" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                Đăng xuất
+                            </a></li>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    @else
+                        <li><a href="{{route('register')}}">Đăng kí</a></li>
+                        <li><a href="{{route('login')}}">Đăng nhập</a></li>
+                    @endif
                 </ul>
             </div>
             <div class="clearfix"></div>
@@ -20,13 +42,15 @@
     <div class="header-body">
         <div class="container beta-relative">
             <div class="pull-left">
-                <a href="index.html" id="logo"><img src="assets/dest/images/logo-cake.png" width="200px" alt=""></a>
+                <a href="" id="logo"><img src="storage/source/assets/dest/images/logo-cake.png" width="200px"
+                                                    alt=""></a>
             </div>
             <div class="pull-right beta-components space-left ov">
                 <div class="space10">&nbsp;</div>
                 <div class="beta-comp">
-                    <form role="search" method="get" id="searchform" action="/">
-                        <input type="text" value="" name="s" id="s" placeholder="Nhập từ khóa..."/>
+                    <form role="search" method="get" id="searchform" action="{{route('page.search')}}">
+                        @csrf
+                        <input type="text" value="" name="keyword" id="s" placeholder="Nhập từ khóa..."/>
                         <button class="fa fa-search" type="submit" id="searchsubmit"></button>
                     </form>
                 </div>
@@ -43,7 +67,7 @@
                                     <div class="cart-item">
                                         <div class="media">
                                             <a class="pull-left" href="#"><img
-                                                    src="image/product/{{$product['item']['image']}}"
+                                                    src="storage/source/image/product/{{$product['item']['image']}}"
                                                     alt=""></a>
                                             <div class="media-body">
                                                 <span class="cart-item-title">{{$product['item']['name']}}</span>
@@ -74,7 +98,8 @@
                                         tiết<i
                                             class="fa fa-chevron-right"></i></a>
 
-                                    <a href="{{route('page.checkOut')}}" class="beta-btn primary text-center">Đặt hàng <i
+                                    <a href="{{route('page.checkOut')}}" class="beta-btn primary text-center">Đặt hàng
+                                        <i
                                             class="fa fa-chevron-right"></i></a>
                                 </div>
                             </div>
